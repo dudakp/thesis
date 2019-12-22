@@ -3,8 +3,8 @@ pipeline {
 
     tools {
         maven "Maven 3.6.0"
-        docker "Docker"
     }
+
     stages {
 
         stage('Build'){
