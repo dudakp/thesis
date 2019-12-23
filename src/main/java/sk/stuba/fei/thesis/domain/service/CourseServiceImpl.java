@@ -1,23 +1,34 @@
 package sk.stuba.fei.thesis.domain.service;
 
+
+import org.dozer.DozerBeanMapper;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import sk.stuba.fei.thesis.domain.dao.CourseRepository;
 import sk.stuba.fei.thesis.domain.model.course.Course;
+import sk.stuba.fei.thesis.domain.model.course.EmbeddedCourse;
 
 @Service
 public class CourseServiceImpl implements CourseService {
 
     private final CourseRepository courseRepository;
+    private final DozerBeanMapper mapper;
 
-    public CourseServiceImpl(CourseRepository courseRepository) {
+//    Logger logger = LoggerFactory.getLogger(CourseServiceImpl.class);
+
+    public CourseServiceImpl(CourseRepository courseRepository, DozerBeanMapper mapper) {
         this.courseRepository = courseRepository;
+        this.mapper = mapper;
     }
 
     @Override
-    public Mono save(Course course) {
-        return this.courseRepository.save(course);
+    public Mono save(EmbeddedCourse course) {
+        final Course mappedCourse = Course.builder()
+                .title(course.getTitle())
+                .abbreviation(course.getAbrevaion())
+                .build();
+        return this.courseRepository.save(mappedCourse);
     }
 
     @Override

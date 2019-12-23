@@ -1,10 +1,7 @@
 package sk.stuba.fei.thesis.domain.model.course;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import sk.stuba.fei.thesis.domain.model.actors.EmbeddedUser;
@@ -15,9 +12,9 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 @Document(collection = "courses")
 public class Course {
-
     @Id
     private String _id;
     private String title;
