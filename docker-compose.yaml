@@ -1,0 +1,20 @@
+version: '3'
+services:
+  app:
+    build: .
+    image: thesis-spring
+    ports:
+      - 8081:8081
+    depends_on:
+      - thesis-mongo
+
+    thesis-mongo:
+      container_name: thesis-mongo
+      image: mongo
+      restart: always
+      environment:
+        - MONGO_DATA_DIR=/data/db
+        - MONGO_LOG_DIR=/dev/null
+      ports:
+        - 27017:27017
+#      command: mongod --smallfiles --logpath=/dev/null # --quiet
