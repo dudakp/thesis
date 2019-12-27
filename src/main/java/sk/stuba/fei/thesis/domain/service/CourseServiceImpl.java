@@ -24,10 +24,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Mono save(EmbeddedCourse course) {
-        final Course mappedCourse = Course.builder()
-                .title(course.getTitle())
-                .abbreviation(course.getAbrevaion())
-                .build();
+        final Course mappedCourse = mapper.map(course, Course.class);
         return this.courseRepository.save(mappedCourse);
     }
 

@@ -21,11 +21,11 @@ public class Course {
     private String abbreviation;
     private List<EmbeddedUser> enrolledStudents;
     private Semester semester;
-    private EmbeddedUser lecturer;
+    private List<EmbeddedUser> lecturers;
     private List<EmbeddedUser> instructors;
     private List<Exam> exams;
     private Exam finalExam;
-    private List<Lab> labs;
+    private List<Lecture> labs;
     private List<Lecture> lectures;
 
 

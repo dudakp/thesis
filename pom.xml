@@ -104,6 +104,18 @@
             <artifactId>dozer</artifactId>
             <version>5.5.1</version>
         </dependency>
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-core</artifactId>
+            <version>4.2.1</version>
+        </dependency>
+
+        <!--nejaka chyba pri mapovani LocalDateTime, toto by to malo riesit-->
+        <dependency>
+            <groupId>io.craftsman</groupId>
+            <artifactId>dozer-jdk8-support</artifactId>
+            <version>1.0.6</version>
+        </dependency>
 
 
     </dependencies>
