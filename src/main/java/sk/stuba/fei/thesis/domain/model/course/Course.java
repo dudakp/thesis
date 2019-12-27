@@ -1,6 +1,7 @@
 package sk.stuba.fei.thesis.domain.model.course;
 
 
+import com.querydsl.core.annotations.QueryEntity;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -13,20 +14,22 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
+@QueryEntity
 @Document(collection = "courses")
 public class Course {
     @Id
     private String _id;
     private String title;
     private String abbreviation;
-    private List<EmbeddedUser> enrolledStudents;
     private Semester semester;
-    private EmbeddedUser lecturer;
+    private List<EmbeddedUser> lecturers;
     private List<EmbeddedUser> instructors;
-    private List<Exam> exams;
-    private Exam finalExam;
-    private List<Lab> labs;
     private List<Lecture> lectures;
+    private List<Lecture> labs;
+    private List<Exam> exams;
+    private Exam finals;
+
+    private List<EmbeddedUser> enrolledStudents;
 
 
 }

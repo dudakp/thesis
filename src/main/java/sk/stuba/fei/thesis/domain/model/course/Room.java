@@ -17,6 +17,7 @@ import javax.validation.constraints.*;
 
 public class Room   {
   @JsonProperty("room")
+  @ApiModelProperty(example = "BC-300")
   private String room = null;
 
   public Room room(String room) {

@@ -11,6 +11,8 @@ public interface CourseService {
 
     Mono<EmbeddedCourse> getById(String id);
 
+    Flux getByAbbrv(String abbrv);
+
     Mono getByName(String name);
 
     Flux getByLecturerName(String lecturerName);

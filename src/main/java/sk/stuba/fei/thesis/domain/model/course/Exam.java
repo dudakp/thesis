@@ -15,6 +15,7 @@ import java.time.LocalDate;
 
 public class Exam {
     @JsonProperty("date")
+    @ApiModelProperty(example = "2020-01-01")
     private LocalDate date = null;
 
     @JsonProperty("room")
