@@ -34,10 +34,11 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Flux getByAbbrv(String abbrv) {
-        QCourse qCourse = new QCourse(abbrv);
-        final BooleanExpression eq = qCourse.abbreviation.eq(abbrv);
-        final Flux all = this.courseRepository.findAll(eq);
-        return all;
+//        QCourse qCourse = new QCourse(abbrv);
+//        final BooleanExpression eq = qCourse.abbreviation.eq(abbrv);
+//        final Flux all = this.courseRepository.findAll(eq);
+//        return all;
+        return null;
     }
 
     @Override

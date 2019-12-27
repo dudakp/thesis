@@ -11,6 +11,5 @@ import javax.sql.rowset.Predicate;
 @Repository
 public interface CourseRepository extends ReactiveMongoRepository<Course, String>, ReactiveQuerydslPredicateExecutor<Course> {
 
-    Flux<Course> findAll(Predicate predicate);
 }
 
