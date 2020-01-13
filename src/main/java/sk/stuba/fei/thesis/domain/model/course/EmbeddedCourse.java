@@ -3,9 +3,8 @@ package sk.stuba.fei.thesis.domain.model.course;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.validation.annotation.Validated;
 import sk.stuba.fei.thesis.domain.model.actors.EmbeddedUser;
 
@@ -17,10 +16,9 @@ import java.util.List;
  * EmbeddedCourse
  */
 @Validated
-@NoArgsConstructor
+@Data
 @AllArgsConstructor
-@Getter
-@Setter
+@NoArgsConstructor
 public class EmbeddedCourse {
 
     @JsonProperty("title")
@@ -42,20 +40,21 @@ public class EmbeddedCourse {
     @Valid
     private List<EmbeddedUser> instructors;
 
-    @JsonProperty("lectures")
-    @Valid
-    private List<Lecture> lectures;
+//    @JsonProperty("lectures")
+//    @Valid
+//    private List<Lecture> lectures = null;
+//
+//    @JsonProperty("labs")
+//    @Valid
+//    private List<Lecture> labs = null;
+//
+//    @JsonProperty("exams")
+//    @Valid
+//    private List<Exam> exams = null;
+//
+//    @JsonProperty("finals")
+//    @Valid
+//    private List<Exam> finals = null;
 
-    @JsonProperty("labs")
-    @Valid
-    private List<Lecture> labs;
-
-    @JsonProperty("exams")
-    @Valid
-    private List<Exam> exams;
-
-    @JsonProperty("finals")
-    @Valid
-    private Exam finals;
 }
 

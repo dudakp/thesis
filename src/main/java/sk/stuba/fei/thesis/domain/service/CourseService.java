@@ -16,4 +16,6 @@ public interface CourseService {
     Mono getByName(String name);
 
     Flux getByLecturerName(String lecturerName);
+
+    Flux<Course> getCourseByQueryString(String query);
 }

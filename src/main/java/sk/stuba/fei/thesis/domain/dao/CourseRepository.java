@@ -9,7 +9,7 @@ import sk.stuba.fei.thesis.domain.model.course.Course;
 import javax.sql.rowset.Predicate;
 
 @Repository
-public interface CourseRepository extends ReactiveMongoRepository<Course, String>, ReactiveQuerydslPredicateExecutor<Course> {
-
+public interface CourseRepository extends ReactiveMongoRepository<Course, String>,
+        ReactiveQuerydslPredicateExecutor<Course> {
 }
 
