@@ -8,14 +8,13 @@ import reactor.core.publisher.Mono;
 import sk.stuba.fei.thesis.domain.dao.CourseRepository;
 import sk.stuba.fei.thesis.domain.model.course.Course;
 import sk.stuba.fei.thesis.domain.model.course.EmbeddedCourse;
+import sk.stuba.fei.thesis.domain.model.course.QCourse;
 
 @Service
 public class CourseServiceImpl implements CourseService {
 
     private final CourseRepository courseRepository;
     private final DozerBeanMapper mapper;
-
-//    Logger logger = LoggerFactory.getLogger(CourseServiceImpl.class);
 
     public CourseServiceImpl(CourseRepository courseRepository, DozerBeanMapper mapper) {
         this.courseRepository = courseRepository;
@@ -26,6 +25,13 @@ public class CourseServiceImpl implements CourseService {
     public Mono save(EmbeddedCourse course) {
         final Course mappedCourse = mapper.map(course, Course.class);
         return this.courseRepository.save(mappedCourse);
+    }
+
+    @Override
+    public Flux<Course> getCourseByQueryString(String query) {
+        QCourse q = QCourse.course;
+        final Flux<Course> bp1 = this.courseRepository.findAll(q.title.eq(query));
+        return bp1;
     }
 
     @Override

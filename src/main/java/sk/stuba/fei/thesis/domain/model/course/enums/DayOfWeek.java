@@ -1,4 +1,4 @@
-package sk.stuba.fei.thesis.domain.model.course;
+package sk.stuba.fei.thesis.domain.model.course.enums;
 
 public enum DayOfWeek {
 
