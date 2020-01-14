@@ -25,7 +25,7 @@ public class CourseController {
             @ApiResponse(code = 200, message = "Successfully created course!")
     })
     @PostMapping
-    public Mono createCourse(@RequestBody EmbeddedCourse course) {
+    public Mono<Course> createCourse(@RequestBody EmbeddedCourse course) {
         return this.courseService.save(course);
     }
 
@@ -35,7 +35,7 @@ public class CourseController {
             @ApiResponse(code = 200, message = "Course retrieved successfully ")
     })
     @GetMapping
-    public Flux getCourseByAbbrv(@RequestParam String abbrv) {
+    public Flux<Course> getCourseByAbbrv(@RequestParam String abbrv) {
         return this.courseService.getByAbbrv("BP2");
     }
 

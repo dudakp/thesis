@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import sk.stuba.fei.thesis.domain.model.actors.EmbeddedUser;
+import sk.stuba.fei.thesis.domain.model.actors.User;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -34,11 +35,11 @@ public class EmbeddedCourse {
 
     @JsonProperty("lecturers")
     @Valid
-    private List<EmbeddedUser> lecturers;
+    private List<User> lecturers;
 
     @JsonProperty("instructors")
     @Valid
-    private List<EmbeddedUser> instructors;
+    private List<User> instructors;
 
 //    @JsonProperty("lectures")
 //    @Valid
