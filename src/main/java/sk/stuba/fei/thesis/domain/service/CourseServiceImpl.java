@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import sk.stuba.fei.thesis.domain.dao.CourseRepository;
+import sk.stuba.fei.thesis.domain.model.actors.EmbeddedUser;
 import sk.stuba.fei.thesis.domain.model.course.Course;
 import sk.stuba.fei.thesis.domain.model.course.EmbeddedCourse;
 import sk.stuba.fei.thesis.domain.model.course.QCourse;
@@ -49,6 +50,11 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Flux getByLecturerName(String lecturerName) {
+        return null;
+    }
+
+    @Override
+    public Mono<Course> updateCourse(EmbeddedUser course) {
         return null;
     }
 }

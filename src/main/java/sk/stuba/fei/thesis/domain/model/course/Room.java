@@ -1,19 +1,21 @@
 package sk.stuba.fei.thesis.domain.model.course;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.querydsl.core.annotations.QueryEntity;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.validation.annotation.Validated;
 
 /**
  * Room
  */
-@Validated
-@Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@QueryEntity
+@Document(collection = "rooms")
 public class Room {
     @JsonProperty("room")
     @ApiModelProperty(example = "BC-300")

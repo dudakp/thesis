@@ -10,6 +10,7 @@ import sk.stuba.fei.thesis.domain.model.actors.EmbeddedUser;
 import sk.stuba.fei.thesis.domain.model.actors.User;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 
@@ -22,24 +23,27 @@ import java.util.List;
 @NoArgsConstructor
 public class EmbeddedCourse {
 
+    @NotNull
     @JsonProperty("title")
-    @ApiModelProperty(example = "Bachelors thesis 1")
+    @ApiModelProperty(example = "Operating systems")
     private String title;
 
+    @NotNull
     @JsonProperty("abrevaion")
-    @ApiModelProperty(example = "BP1")
+    @ApiModelProperty(example = "B-OS")
     private String abbreviation;
 
+    @NotNull
     @JsonProperty("semester")
     private Semester semester;
 
+    @NotNull
     @JsonProperty("lecturers")
-    @Valid
-    private List<User> lecturers;
+    private List<Long> lecturers;
 
+    @NotNull
     @JsonProperty("instructors")
-    @Valid
-    private List<User> instructors;
+    private List<Long> instructors;
 
 //    @JsonProperty("lectures")
 //    @Valid

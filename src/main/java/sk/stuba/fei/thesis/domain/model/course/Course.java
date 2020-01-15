@@ -7,6 +7,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import sk.stuba.fei.thesis.domain.model.actors.EmbeddedUser;
+import sk.stuba.fei.thesis.domain.model.actors.User;
 import sk.stuba.fei.thesis.domain.model.course.enums.Semester;
 
 import java.util.List;
@@ -24,8 +25,8 @@ public class Course {
     private String title;
     private String abbreviation;
     private Semester semester;
-    private List<EmbeddedUser> lecturers;
-    private List<EmbeddedUser> instructors;
+    private List<User> lecturers;
+    private List<User> instructors;
 
     private List<Exam> exams;
     private Exam finalExam;

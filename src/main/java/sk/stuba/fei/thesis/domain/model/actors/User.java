@@ -7,6 +7,9 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotNull;
+
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -18,18 +21,25 @@ public class User {
     @Id
     private String _id;
 
+    @NotNull
     @JsonProperty("isID")
-    @ApiModelProperty(example = "92291")
+    @ApiModelProperty(example = "82375")
     private Long isID;
 
+    @NotNull
     @JsonProperty("firstName")
-    @ApiModelProperty(example = "Fero")
+    @ApiModelProperty(example = "Andrej")
     private String firstName;
 
     @JsonProperty("middleName")
     private String middleName;
 
+    @NotNull
     @JsonProperty("lastName")
-    @ApiModelProperty(example = "Nefero")
+    @ApiModelProperty(example = "Drobny")
     private String lastName;
+
+    @NotNull
+    @JsonProperty("userType")
+    private UserType userType;
 }

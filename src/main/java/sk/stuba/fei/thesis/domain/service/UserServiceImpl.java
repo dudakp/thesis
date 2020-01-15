@@ -1,6 +1,5 @@
 package sk.stuba.fei.thesis.domain.service;
 
-import lombok.RequiredArgsConstructor;
 import org.dozer.DozerBeanMapper;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -8,25 +7,43 @@ import reactor.core.publisher.Mono;
 import sk.stuba.fei.thesis.domain.dao.UserRepository;
 import sk.stuba.fei.thesis.domain.model.actors.QUser;
 import sk.stuba.fei.thesis.domain.model.actors.User;
-import sk.stuba.fei.thesis.domain.model.course.Course;
-import sk.stuba.fei.thesis.domain.model.course.QCourse;
+import sk.stuba.fei.thesis.domain.model.actors.UserType;
 
 @Service
-@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final DozerBeanMapper mapper;
+    private final QUser qUser;
 
-    @Override
-    public Mono createUser(User user) {
-        return this.userRepository.save(user);
+    public UserServiceImpl(UserRepository userRepository, DozerBeanMapper mapper) {
+        this.userRepository = userRepository;
+        this.mapper = mapper;
+        this.qUser = QUser.user;
     }
 
     @Override
-    public Flux<User> getUsersByQueryString(String queryString) {
-        QUser qUser = QUser.user;
-        return this.userRepository.findAll(qUser.firstName.containsIgnoreCase(queryString)
+    public Mono<User> createUser(User user) {
+        return this.getUserByIsID(user.getIsID()).switchIfEmpty(
+                this.userRepository.save(user)
+        );
+    }
+
+    @Override
+    public Mono<User> getUserByIsID(Long id) {
+        return this.userRepository.findOne(this.qUser.isID.eq(id));
+    }
+
+    @Override
+    public Flux<User> getUsersByType(UserType type) {
+        return this.userRepository.findAll(this.qUser.userType.eq(type));
+    }
+
+    @Override
+    public Flux<User> getUserByName(String queryString) {
+        return this.userRepository.findAll(this.qUser.firstName.containsIgnoreCase(queryString)
                 .or(qUser.lastName.containsIgnoreCase(queryString)));
     }
+
+
 }

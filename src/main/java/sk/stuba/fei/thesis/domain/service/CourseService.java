@@ -2,20 +2,23 @@ package sk.stuba.fei.thesis.domain.service;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import sk.stuba.fei.thesis.domain.model.actors.EmbeddedUser;
 import sk.stuba.fei.thesis.domain.model.course.Course;
 import sk.stuba.fei.thesis.domain.model.course.EmbeddedCourse;
 
 public interface CourseService {
 
-    Mono save(EmbeddedCourse course);
+    Mono<Course> save(EmbeddedCourse course);
 
     Mono<EmbeddedCourse> getById(String id);
 
-    Flux getByAbbrv(String abbrv);
+    Flux<Course> getByAbbrv(String abbrv);
 
-    Mono getByName(String name);
+    Mono<Course> getByName(String name);
 
-    Flux getByLecturerName(String lecturerName);
+    Flux<Course> getByLecturerName(String lecturerName);
 
     Flux<Course> getCourseByQueryString(String query);
+
+    Mono<Course> updateCourse(EmbeddedUser course);
 }

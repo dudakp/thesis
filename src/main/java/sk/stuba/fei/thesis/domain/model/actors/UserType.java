@@ -2,6 +2,7 @@ package sk.stuba.fei.thesis.domain.model.actors;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonValue;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -17,9 +18,10 @@ public enum UserType {
   
   STUDENT("STUDENT");
 
+  @ApiModelProperty(example = "TEACHER")
   private String value;
 
-  UserType(String value) {
+  UserType(@NotNull String value) {
     this.value = value;
   }
 }
