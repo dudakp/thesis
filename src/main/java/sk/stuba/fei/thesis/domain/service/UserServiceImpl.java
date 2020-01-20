@@ -24,9 +24,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Mono<User> createUser(User user) {
-        return this.getUserByIsID(user.getIsID()).switchIfEmpty(
-                this.userRepository.save(user)
-        );
+        return this
+                .getUserByIsID(user.getIsID())
+                .flatMap(result -> Mono.error(new Exception("User already exists")))
+                .cast(User.class)
+                .switchIfEmpty(
+                        this.userRepository.save(user)
+                );
     }
 
     @Override

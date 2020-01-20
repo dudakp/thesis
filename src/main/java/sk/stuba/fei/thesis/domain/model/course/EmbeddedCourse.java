@@ -11,6 +11,7 @@ import sk.stuba.fei.thesis.domain.model.actors.User;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -39,27 +40,28 @@ public class EmbeddedCourse {
 
     @NotNull
     @JsonProperty("lecturers")
-    private List<Long> lecturers;
+    private List<EmbeddedUser> lecturers;
 
     @NotNull
     @JsonProperty("instructors")
-    private List<Long> instructors;
+    private List<EmbeddedUser> instructors;
 
-//    @JsonProperty("lectures")
-//    @Valid
-//    private List<Lecture> lectures = null;
-//
-//    @JsonProperty("labs")
-//    @Valid
-//    private List<Lecture> labs = null;
-//
-//    @JsonProperty("exams")
-//    @Valid
-//    private List<Exam> exams = null;
-//
-//    @JsonProperty("finals")
-//    @Valid
-//    private List<Exam> finals = null;
+    @JsonProperty("lectures")
+    @Valid
+    private List<Lecture> lectures = new ArrayList<>();
+
+    @JsonProperty("labs")
+    @Valid
+    private List<Lecture> labs = new ArrayList<>();
+
+    @JsonProperty("exams")
+    @Valid
+    private List<Exam> exams = new ArrayList<>();
+
+    @JsonProperty("finals")
+    @Valid
+    private List<Exam> finals = new ArrayList<>();
 
 }
+
 

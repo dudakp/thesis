@@ -25,8 +25,8 @@ public class Course {
     private String title;
     private String abbreviation;
     private Semester semester;
-    private List<User> lecturers;
-    private List<User> instructors;
+    private List<EmbeddedUser> lecturers;
+    private List<EmbeddedUser> instructors;
 
     private List<Exam> exams;
     private Exam finalExam;

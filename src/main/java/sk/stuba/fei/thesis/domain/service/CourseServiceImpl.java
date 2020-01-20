@@ -1,24 +1,33 @@
 package sk.stuba.fei.thesis.domain.service;
 
 
-import lombok.RequiredArgsConstructor;
 import org.dozer.DozerBeanMapper;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import sk.stuba.fei.thesis.domain.dao.CourseRepository;
-import sk.stuba.fei.thesis.domain.model.actors.EmbeddedUser;
+import sk.stuba.fei.thesis.domain.dao.LectureRepository;
 import sk.stuba.fei.thesis.domain.model.course.Course;
 import sk.stuba.fei.thesis.domain.model.course.EmbeddedCourse;
+import sk.stuba.fei.thesis.domain.model.course.Lecture;
 import sk.stuba.fei.thesis.domain.model.course.QCourse;
 
 
 @Service
-@RequiredArgsConstructor
 public class CourseServiceImpl implements CourseService {
 
     private final CourseRepository courseRepository;
+    private final LectureRepository lectureRepository;
     private final DozerBeanMapper mapper;
+    private final QCourse qCourse;
+
+    public CourseServiceImpl(CourseRepository courseRepository, LectureRepository lectureRepository, DozerBeanMapper mapper) {
+        this.courseRepository = courseRepository;
+        this.lectureRepository = lectureRepository;
+        this.mapper = mapper;
+        this.qCourse = QCourse.course;
+
+    }
 
     @Override
     public Mono<Course> save(EmbeddedCourse course) {
@@ -28,13 +37,12 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Flux<Course> getCourseByQueryString(String query) {
-        QCourse q = QCourse.course;
-        final Flux<Course> bp1 = this.courseRepository.findAll(q.title.eq(query));
+        final Flux<Course> bp1 = this.courseRepository.findAll(this.qCourse.title.eq(query));
         return bp1;
     }
 
     @Override
-    public Mono getById(String id) {
+    public Mono<Course> getById(String id) {
         return this.courseRepository.findById(id);
     }
 
@@ -54,7 +62,36 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Mono<Course> updateCourse(EmbeddedUser course) {
+    public Mono<Lecture> addLecture(String courseId, Lecture lecture) {
+        return this.getById(courseId)
+                .map(course -> {
+                    course.getLectures().add(lecture);
+                    return course;
+                })
+                .flatMap(this.courseRepository::save)
+                .doOnError(throwable -> Mono.error(new Exception("Failed to update lecture in DB")))
+                .flatMap(course -> this.lectureRepository.save(lecture))
+                .doOnError(throwable -> Mono.error(new Exception("Failed to add lecture to DB")));
+    }
+
+    @Override
+    public Mono<Lecture> addLab(String courseId, Lecture lecture) {
+        return this.getById(courseId)
+                .map(course -> {
+                    course.getLabs().add(lecture);
+                    return course;
+                })
+                .flatMap(this.courseRepository::save)
+                .doOnError(throwable -> Mono.error(new Exception("Failed to update lecture in DB")))
+                .flatMap(course -> this.lectureRepository.save(lecture))
+                .doOnError(throwable -> Mono.error(new Exception("Failed to add lecture to DB")));
+    }
+
+    @Override
+    public Mono<Course> updateCourse(EmbeddedCourse course) {
+        final Mono<Course> courseToModify = this.courseRepository
+                .findOne(this.qCourse.abbreviation.eq(course.getAbbreviation()));
+//        this.courseRepository.
         return null;
     }
 }

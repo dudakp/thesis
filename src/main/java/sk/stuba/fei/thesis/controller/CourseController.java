@@ -1,15 +1,16 @@
 package sk.stuba.fei.thesis.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import sk.stuba.fei.thesis.domain.model.course.Course;
 import sk.stuba.fei.thesis.domain.model.course.EmbeddedCourse;
+import sk.stuba.fei.thesis.domain.model.course.Lecture;
 import sk.stuba.fei.thesis.domain.service.CourseService;
 
 @Api(value = "Operations obout courses")
@@ -36,7 +37,7 @@ public class CourseController {
     })
     @GetMapping
     public Flux<Course> getCourseByAbbrv(@RequestParam String abbrv) {
-        return this.courseService.getByAbbrv("BP2");
+        return this.courseService.getByAbbrv(abbrv);
     }
 
     @ApiOperation(value = "Update course", response = EmbeddedCourse.class)
@@ -44,8 +45,12 @@ public class CourseController {
             @ApiResponse(code = 200, message = "Successfully updated course!")
     })
     @PutMapping(value = "update")
-    public Mono updateCourse() {
-        return null;
+    public Mono updateCourse(@RequestParam @ApiParam(example = "asdkj") String courseQuery, @RequestBody Lecture lecture) {
+        return this.courseService.addLecture(courseQuery, lecture)
+                .switchIfEmpty(Mono.error(
+                        new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                                "Course not found"))
+                );
     }
 
     @ApiOperation(value = "Removes course", response = EmbeddedCourse.class)
