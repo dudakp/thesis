@@ -9,7 +9,6 @@ import sk.stuba.fei.thesis.domain.dao.CourseRepository;
 import sk.stuba.fei.thesis.domain.dao.LectureRepository;
 import sk.stuba.fei.thesis.domain.model.course.Course;
 import sk.stuba.fei.thesis.domain.model.course.EmbeddedCourse;
-import sk.stuba.fei.thesis.domain.model.course.Lecture;
 import sk.stuba.fei.thesis.domain.model.course.QCourse;
 
 
@@ -26,7 +25,6 @@ public class CourseServiceImpl implements CourseService {
         this.lectureRepository = lectureRepository;
         this.mapper = mapper;
         this.qCourse = QCourse.course;
-
     }
 
     @Override
@@ -36,9 +34,16 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    public Mono<Course> save(Course course) {
+        final Course mappedCourse = mapper.map(course, Course.class);
+        return this.courseRepository.save(mappedCourse);
+    }
+
+    @Override
     public Flux<Course> getCourseByQueryString(String query) {
-        final Flux<Course> bp1 = this.courseRepository.findAll(this.qCourse.title.eq(query));
-        return bp1;
+        return this.courseRepository.findAll(
+                this.qCourse.title.containsIgnoreCase(query)
+                        .or(this.qCourse.abbreviation.containsIgnoreCase(query)));
     }
 
     @Override
@@ -46,52 +51,18 @@ public class CourseServiceImpl implements CourseService {
         return this.courseRepository.findById(id);
     }
 
+
     @Override
-    public Flux getByAbbrv(String abbrv) {
-        return null;
+    public Mono<Void> delete(String id) {
+        return this.getById(id)
+                .flatMap(course -> this.courseRepository.delete(course)
+                        .then(Mono.empty()));
     }
 
     @Override
-    public Mono getByName(String name) {
-        return null;
+    public Mono<Void> delete(Course course) {
+        return this.getById(course.get_id())
+                .flatMap(this.courseRepository::delete);
     }
 
-    @Override
-    public Flux getByLecturerName(String lecturerName) {
-        return null;
-    }
-
-    @Override
-    public Mono<Lecture> addLecture(String courseId, Lecture lecture) {
-        return this.getById(courseId)
-                .map(course -> {
-                    course.getLectures().add(lecture);
-                    return course;
-                })
-                .flatMap(this.courseRepository::save)
-                .doOnError(throwable -> Mono.error(new Exception("Failed to update lecture in DB")))
-                .flatMap(course -> this.lectureRepository.save(lecture))
-                .doOnError(throwable -> Mono.error(new Exception("Failed to add lecture to DB")));
-    }
-
-    @Override
-    public Mono<Lecture> addLab(String courseId, Lecture lecture) {
-        return this.getById(courseId)
-                .map(course -> {
-                    course.getLabs().add(lecture);
-                    return course;
-                })
-                .flatMap(this.courseRepository::save)
-                .doOnError(throwable -> Mono.error(new Exception("Failed to update lecture in DB")))
-                .flatMap(course -> this.lectureRepository.save(lecture))
-                .doOnError(throwable -> Mono.error(new Exception("Failed to add lecture to DB")));
-    }
-
-    @Override
-    public Mono<Course> updateCourse(EmbeddedCourse course) {
-        final Mono<Course> courseToModify = this.courseRepository
-                .findOne(this.qCourse.abbreviation.eq(course.getAbbreviation()));
-//        this.courseRepository.
-        return null;
-    }
 }
