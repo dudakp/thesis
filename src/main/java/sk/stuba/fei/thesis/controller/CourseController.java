@@ -41,6 +41,16 @@ public class CourseController {
         return this.courseService.getCourseByQueryString(queryString);
     }
 
+    @ApiOperation(value = "Returns all courses..",
+            response = Course.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved all courss!")
+    })
+    @GetMapping(value = "all")
+    public Flux<Course> getCourseByPartialMatch() {
+        return this.courseService.getAll();
+    }
+
     @ApiOperation(value = "Removes course")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully removed course!"),

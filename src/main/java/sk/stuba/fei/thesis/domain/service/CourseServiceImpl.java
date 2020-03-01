@@ -47,6 +47,11 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    public Flux<Course> getAll() {
+        return this.courseRepository.findAll();
+    }
+
+    @Override
     public Mono<Course> getById(String id) {
         return this.courseRepository.findById(id);
     }

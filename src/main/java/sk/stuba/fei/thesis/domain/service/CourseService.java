@@ -9,6 +9,8 @@ public interface CourseService {
 
     Mono<Course> save(EmbeddedCourse course);
 
+    Flux<Course> getAll();
+
     Mono<Course> getById(String id);
 
     Mono<Course> save(Course course);
