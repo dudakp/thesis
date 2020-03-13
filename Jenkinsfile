@@ -9,8 +9,7 @@ pipeline {
 
         stage('Build'){
         steps {
-            sh "mvn clean install"
-            sh "whoami"
+            sh "mvn clean install -Dspring-boot.run.profiles=prod"
             }
         }
 
