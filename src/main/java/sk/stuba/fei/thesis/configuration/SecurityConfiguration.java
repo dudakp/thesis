@@ -3,9 +3,7 @@ package sk.stuba.fei.thesis.configuration;
 import org.keycloak.adapters.springsecurity.KeycloakConfiguration;
 import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationProvider;
 import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
-import org.keycloak.adapters.springsecurity.management.HttpSessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,14 +18,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class SecurityConfiguration extends KeycloakWebSecurityConfigurerAdapter implements WebMvcConfigurer {
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) {
-        SimpleAuthorityMapper grantedAuthorityMapper = new SimpleAuthorityMapper();
-        grantedAuthorityMapper.setPrefix("ROLE_");
-
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         KeycloakAuthenticationProvider keycloakAuthenticationProvider = keycloakAuthenticationProvider();
-        keycloakAuthenticationProvider.setGrantedAuthoritiesMapper(grantedAuthorityMapper);
+        keycloakAuthenticationProvider.setGrantedAuthoritiesMapper(new SimpleAuthorityMapper());
         auth.authenticationProvider(keycloakAuthenticationProvider);
     }
+
 
     @Bean
     @Override
@@ -35,23 +31,26 @@ public class SecurityConfiguration extends KeycloakWebSecurityConfigurerAdapter 
         return new RegisterSessionAuthenticationStrategy(new SessionRegistryImpl());
     }
 
-    @Bean
-    @Override
-    @ConditionalOnMissingBean(HttpSessionManager.class)
-    protected HttpSessionManager httpSessionManager() {
-        return new HttpSessionManager();
-    }
+//    @Bean
+//    @Override
+//    @ConditionalOnMissingBean(HttpSessionManager.class)
+//    protected HttpSessionManager httpSessionManager() {
+//        return new HttpSessionManager();
+//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .cors().and().authorizeRequests()
-                .antMatchers("/course/all").hasAnyRole("admin")
+                .cors().and()
+                .csrf().disable()
+                .authorizeRequests()
                 .anyRequest().permitAll();
     }
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**");
+        registry.addMapping("/**").allowedMethods("*");
     }
+
+
 }

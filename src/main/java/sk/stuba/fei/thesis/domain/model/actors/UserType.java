@@ -16,7 +16,9 @@ public enum UserType {
   
   TEACHER("TEACHER"),
   
-  STUDENT("STUDENT");
+  STUDENT("STUDENT"),
+
+  EXT("EXT");
 
   @ApiModelProperty(example = "TEACHER")
   private String value;

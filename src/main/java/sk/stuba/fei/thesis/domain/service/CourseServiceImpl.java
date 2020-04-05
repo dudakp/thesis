@@ -5,10 +5,11 @@ import org.dozer.DozerBeanMapper;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import sk.stuba.fei.thesis.domain.api.CourseService;
 import sk.stuba.fei.thesis.domain.dao.CourseRepository;
 import sk.stuba.fei.thesis.domain.dao.LectureRepository;
 import sk.stuba.fei.thesis.domain.model.course.Course;
-import sk.stuba.fei.thesis.domain.model.course.EmbeddedCourse;
+import sk.stuba.fei.thesis.domain.dto.course.CourseDto;
 import sk.stuba.fei.thesis.domain.model.course.QCourse;
 
 
@@ -28,7 +29,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Mono<Course> save(EmbeddedCourse course) {
+    public Mono<Course> save(CourseDto course) {
         final Course mappedCourse = mapper.map(course, Course.class);
         return this.courseRepository.save(mappedCourse);
     }

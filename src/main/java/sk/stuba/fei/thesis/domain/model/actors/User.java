@@ -6,12 +6,16 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import reactor.core.publisher.Flux;
+import sk.stuba.fei.thesis.domain.model.course.Course;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @NoArgsConstructor
-@AllArgsConstructor
+//@RequiredArgsConstructor
 @Getter
 @Setter
 @QueryEntity
@@ -25,6 +29,10 @@ public class User {
     @JsonProperty("isID")
     @ApiModelProperty(example = "82375")
     private Long isID;
+
+    @NotNull
+    @JsonProperty("isName")
+    private String isName;
 
     @NotNull
     @JsonProperty("firstName")
@@ -42,4 +50,15 @@ public class User {
     @NotNull
     @JsonProperty("userType")
     private UserType userType;
+
+    @JsonProperty("enrolledCourses")
+    private List<Course> enrolledCourses = new ArrayList<>();
+
+    public User(Long i, String xdudakp, String pavol, String dudak, UserType student) {
+        this.isID = i;
+        this.isName = xdudakp;
+        this.firstName = pavol;
+        this.lastName = dudak;
+        this.userType = student;
+    }
 }

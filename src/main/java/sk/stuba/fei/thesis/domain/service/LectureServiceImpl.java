@@ -1,10 +1,11 @@
 package sk.stuba.fei.thesis.domain.service;
 
 import lombok.RequiredArgsConstructor;
-import org.dozer.DozerBeanMapper;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import sk.stuba.fei.thesis.domain.api.CourseService;
+import sk.stuba.fei.thesis.domain.api.LectureService;
 import sk.stuba.fei.thesis.domain.dao.LectureRepository;
 import sk.stuba.fei.thesis.domain.model.course.Course;
 import sk.stuba.fei.thesis.domain.model.course.Lecture;

@@ -1,16 +1,14 @@
 package sk.stuba.fei.thesis.controller;
 
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import sk.stuba.fei.thesis.dao.api.CourseSearchService;
 import sk.stuba.fei.thesis.domain.model.actors.User;
-import sk.stuba.fei.thesis.domain.model.actors.UserType;
-import sk.stuba.fei.thesis.domain.service.UserService;
+import sk.stuba.fei.thesis.domain.api.UserService;
+import sk.stuba.fei.thesis.domain.model.course.Course;
 
 @Api(value = "!!!DONT USE THIS, ONLY FOR DEBUG!!!")
 @RequiredArgsConstructor
@@ -19,22 +17,20 @@ import sk.stuba.fei.thesis.domain.service.UserService;
 public class UserController {
 
     private final UserService userService;
+    private final CourseSearchService courseSearchService;
 
-    @ApiOperation(value = "Create user", response = User.class)
-    @PostMapping
-    public Mono<User> createUser(User user) {
-        return this.userService.createUser(user);
+    @GetMapping(value = "hello")
+    private void hello() {
+
     }
 
-    @ApiOperation(value = "Get users by userType", response = User.class)
-    @GetMapping(value = "byType")
-    public Flux<User> getUserByType(@RequestParam UserType query) {
-        return this.userService.getUsersByType(query);
+    @PostMapping(value = "enroll")
+    public Mono<User> enrollToCourse(@RequestParam String courseAbrv) {
+        return this.userService.enrollToCourse(courseAbrv);
     }
 
-    @ApiOperation(value = "Create course", response = User.class)
-    @GetMapping(value = "byName")
-    public Flux<User> getUserByName(@RequestParam String query) {
-        return this.userService.getUserByName(query);
+    @GetMapping(value = "getCourses")
+    public Flux<Course> getEnrolledCourses() {
+        return this.courseSearchService.findAllEnrolledCourses();
     }
 }

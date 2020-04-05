@@ -1,4 +1,4 @@
-package sk.stuba.fei.thesis.domain.service;
+package sk.stuba.fei.thesis.domain.api;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

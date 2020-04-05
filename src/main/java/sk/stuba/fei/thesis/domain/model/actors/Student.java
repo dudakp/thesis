@@ -18,7 +18,6 @@ import java.util.List;
 public class Student extends User {
 
     private int credits;
-    private List<Course> enrolledCourses = new ArrayList<>();
 
 }
 
