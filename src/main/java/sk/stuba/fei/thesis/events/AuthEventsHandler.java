@@ -8,10 +8,13 @@ import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.support.ServletRequestHandledEvent;
 import sk.stuba.fei.thesis.dao.api.UserSearchService;
 import sk.stuba.fei.thesis.domain.dao.UserRepository;
 import sk.stuba.fei.thesis.domain.model.actors.User;
 import sk.stuba.fei.thesis.utils.api.AuthFacade;
+
+import javax.servlet.ServletRequest;
 
 @Component
 @AllArgsConstructor
@@ -35,6 +38,8 @@ public class AuthEventsHandler implements ApplicationListener<ApplicationEvent> 
                     .subscribe(
                             user -> this.LOGGER.debug(user.toString())
                     );
+        } else if (event instanceof ServletRequestHandledEvent) {
+            
         }
     }
 }
