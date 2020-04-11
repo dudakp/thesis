@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.web.authentication.session.NullAuthenticatedSessionStrategy;
@@ -16,7 +17,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @KeycloakConfiguration
-public class SecurityConfiguration extends KeycloakWebSecurityConfigurerAdapter implements WebMvcConfigurer{
+public class SecurityConfiguration extends KeycloakWebSecurityConfigurerAdapter implements WebMvcConfigurer {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -46,8 +47,10 @@ public class SecurityConfiguration extends KeycloakWebSecurityConfigurerAdapter 
         http
                 .cors().and()
                 .csrf().disable()
-                .sessionManagement().disable()
-                .authorizeRequests()
+                    .sessionManagement()
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                    .authorizeRequests()
                 .anyRequest().authenticated();
     }
 
