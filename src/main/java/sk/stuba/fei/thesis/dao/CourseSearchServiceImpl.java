@@ -19,7 +19,8 @@ public class CourseSearchServiceImpl implements CourseSearchService {
 
     @Override
     public Flux<Course> findAllEnrolledCourses() {
-        return this.userRepository.findOne(UserPredicates.hasIsName(this.authFacade.getIsName()))
+        String isName = this.authFacade.getIsName();
+        return this.userRepository.findOne(UserPredicates.hasIsName(isName))
                 .map(User::getEnrolledCourses)
                 .flatMapMany(Flux::fromIterable);
     }

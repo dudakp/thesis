@@ -30,7 +30,8 @@ public class AuthFacadeImpl implements AuthFacade {
 
     @Override
     public UserDto getAuthenticatedUser() {
-        String[] userName = this.getUserToken()
+        AccessToken userToken = this.getUserToken();
+        String[] userName = userToken
                 .getGivenName()
                 .split(" ");
         Long isId = Long.parseLong((String) this.getUserAttributes().get("isId"));
