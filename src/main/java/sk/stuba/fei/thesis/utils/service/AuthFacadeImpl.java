@@ -31,13 +31,10 @@ public class AuthFacadeImpl implements AuthFacade {
     @Override
     public UserDto getAuthenticatedUser() {
         AccessToken userToken = this.getUserToken();
-        String[] userName = userToken
-                .getGivenName()
-                .split(" ");
         Long isId = Long.parseLong((String) this.getUserAttributes().get("isId"));
-        String isName = this.getIsName();
+        String isName = userToken.getPreferredUsername();
         String userType = this.getUserType().toUpperCase();
-        return new UserDto(isId, isName, userName[0], userName[1], UserType.valueOf(userType));
+        return new UserDto(isId, isName, userToken.getGivenName(), userToken.getFamilyName(), UserType.valueOf(userType));
     }
 
     private AccessToken getUserToken() {

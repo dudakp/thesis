@@ -16,5 +16,19 @@ public final class UserPredicates {
         return QUser.user.isName.eq(isName);
     }
 
+    public static Predicate hasAnyIdentityAttribute(String queryIdentityAttribute) {
+        QUser user = QUser.user;
+        return user.isName
+                .likeIgnoreCase(queryIdentityAttribute)
+                .or(
+                        user.firstName.likeIgnoreCase(queryIdentityAttribute))
+                .or(
+                        user.middleName.likeIgnoreCase(queryIdentityAttribute))
+                .or(
+                        user.lastName.likeIgnoreCase(queryIdentityAttribute))
+                .or(
+                        user.isID.goe(Long.parseLong(queryIdentityAttribute)));
+    }
+
 }
 

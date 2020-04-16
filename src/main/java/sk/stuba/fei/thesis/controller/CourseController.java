@@ -12,6 +12,8 @@ import sk.stuba.fei.thesis.domain.api.CourseService;
 import sk.stuba.fei.thesis.domain.dto.course.CourseDto;
 import sk.stuba.fei.thesis.domain.model.course.Course;
 
+import javax.validation.Valid;
+
 @Api(value = "Operations obout courses")
 @RequiredArgsConstructor
 @RequestMapping(value = "course")
@@ -25,7 +27,7 @@ public class CourseController {
             @ApiResponse(code = 200, message = "Successfully created course!")
     })
     @PostMapping
-    public Mono<Course> createCourse(@RequestBody CourseDto course) {
+    public Mono<Course> createCourse(@RequestBody @Valid Course course) {
         return this.courseService.save(course);
     }
 

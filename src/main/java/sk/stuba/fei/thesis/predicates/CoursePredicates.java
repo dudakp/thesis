@@ -1,14 +1,18 @@
 package sk.stuba.fei.thesis.predicates;
 
-import com.querydsl.core.types.dsl.ListPath;
-import sk.stuba.fei.thesis.domain.model.actors.QUser;
-import sk.stuba.fei.thesis.domain.model.course.Course;
+import com.querydsl.core.types.Predicate;
 import sk.stuba.fei.thesis.domain.model.course.QCourse;
 
 public final class CoursePredicates {
-    private CoursePredicates() {}
+    private CoursePredicates() {
+    }
 
-    public static ListPath<Course, QCourse> enrolledCourses() {
-        return QUser.user.enrolledCourses;
+    public static Predicate hasAbrv(String abrv) {
+        return QCourse.course.abbreviation.equalsIgnoreCase(abrv);
+    }
+
+    public static Predicate hasTitleOrAbrv(String query) {
+        return QCourse.course.title.containsIgnoreCase(query)
+                .or(QCourse.course.abbreviation.containsIgnoreCase(query));
     }
 }
