@@ -7,6 +7,8 @@ import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.validation.annotation.Validated;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * Room
  */
@@ -17,8 +19,11 @@ import org.springframework.validation.annotation.Validated;
 @QueryEntity
 @Document(collection = "rooms")
 public class Room {
+
+    @NotNull
     @JsonProperty("room")
     @ApiModelProperty(example = "BC-300")
-    private String room = null;
+    private String room;
+
 }
 

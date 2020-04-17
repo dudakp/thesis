@@ -2,6 +2,7 @@ package sk.stuba.fei.thesis.dao;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import sk.stuba.fei.thesis.dao.api.UserSearchService;
 import sk.stuba.fei.thesis.domain.dao.UserRepository;
@@ -15,11 +16,17 @@ public class UserSearchServiceImpl implements UserSearchService {
 
     @Override
     public Mono<User> findByIsID(Long id) {
-        return this.userRepository.findOne(UserPredicates.hasIsNumber(id));
+        return this.userRepository.findOne(UserPredicates.hasIsNumber(id))
+                .switchIfEmpty(Mono.error(new Exception(String.format("User with isID: %s does not exist!", id))));
     }
 
     @Override
     public Mono<User> findByIsName(String isName) {
         return this.userRepository.findOne(UserPredicates.hasIsName(isName));
+    }
+
+    @Override
+    public Flux<User> findByIdentityAttribute(String identityAttributeValue) {
+        return this.userRepository.findAll(UserPredicates.hasAnyIdentityAttribute(identityAttributeValue));
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Exam
@@ -26,7 +27,7 @@ public class Exam {
 
     @JsonProperty("date")
     @ApiModelProperty(example = "2020-01-01")
-    private LocalDate date;
+    private LocalDateTime date;
 
     @JsonProperty("room")
     @ApiModelProperty(example = "BC-300")

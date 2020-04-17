@@ -24,13 +24,20 @@ public class UserController {
 
     }
 
+    @GetMapping(value = "getCourses")
+    public Flux<Course> getEnrolledCourses() {
+        return this.courseSearchService.findAllEnrolledCourses();
+    }
+
+    @GetMapping(value = "getByName")
+    public Flux<User> getByName(@RequestParam String queryName) {
+        return this.userService.getByPartialNameMatch(queryName);
+    }
+
     @PostMapping(value = "enroll")
     public Mono<User> enrollToCourse(@RequestParam String courseAbrv) {
         return this.userService.enrollToCourse(courseAbrv);
     }
 
-    @GetMapping(value = "getCourses")
-    public Flux<Course> getEnrolledCourses() {
-        return this.courseSearchService.findAllEnrolledCourses();
-    }
+
 }

@@ -7,8 +7,6 @@ import sk.stuba.fei.thesis.domain.dto.course.CourseDto;
 
 public interface CourseService {
 
-    Mono<Course> save(CourseDto course);
-
     Flux<Course> getAll();
 
     Mono<Course> getById(String id);

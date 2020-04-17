@@ -8,7 +8,7 @@ import sk.stuba.fei.thesis.domain.api.CourseService;
 import sk.stuba.fei.thesis.domain.api.LectureService;
 import sk.stuba.fei.thesis.domain.dao.LectureRepository;
 import sk.stuba.fei.thesis.domain.model.course.Course;
-import sk.stuba.fei.thesis.domain.model.course.Lecture;
+import sk.stuba.fei.thesis.domain.model.course.EducationalActivity;
 
 import java.util.List;
 
@@ -20,12 +20,12 @@ public class LectureServiceImpl implements LectureService {
     private final LectureRepository lectureRepository;
 
     @Override
-    public Flux<Lecture> findAll() {
+    public Flux<EducationalActivity> findAll() {
         return this.lectureRepository.findAll();
     }
 
     @Override
-    public Flux<Course> addLectures(String courseId, List<Lecture> lectures) {
+    public Flux<Course> addLectures(String courseId, List<EducationalActivity> educationalActivities) {
         return null;
 //        return this.getById(courseId)
 //                .map(course -> {
@@ -40,15 +40,15 @@ public class LectureServiceImpl implements LectureService {
     }
 
     @Override
-    public Mono<Lecture> addLab(String courseId, Lecture lecture) {
+    public Mono<EducationalActivity> addLab(String courseId, EducationalActivity educationalActivity) {
         return this.courseService.getById(courseId)
                 .map(course -> {
-                    course.getLabs().add(lecture);
+                    course.getLabs().add(educationalActivity);
                     return course;
                 })
                 .flatMap(this.courseService::save)
                 .doOnError(throwable -> Mono.error(new Exception("Failed to update lecture in DB")))
-                .flatMap(course -> this.lectureRepository.save(lecture))
+                .flatMap(course -> this.lectureRepository.save(educationalActivity))
                 .doOnError(throwable -> Mono.error(new Exception("Failed to add lecture to DB")));
     }
 }

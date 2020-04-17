@@ -7,13 +7,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import sk.stuba.fei.thesis.domain.model.actors.UserType;
 
+import javax.validation.constraints.NotNull;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDto {
+
+    @NotNull
     @JsonProperty("isID")
     @ApiModelProperty(example = "90010")
-    private Long isID = null;
+    private Long isID;
 
     @JsonProperty("isName")
     @ApiModelProperty(example = "xmrkvickaf")
@@ -21,12 +25,12 @@ public class UserDto {
 
     @JsonProperty("firstName")
     @ApiModelProperty(example = "Fero")
-    private String firstName = null;
+    private String firstName;
 
     @JsonProperty("lastName")
-    @ApiModelProperty(example = "Policka")
-    private String lastName = null;
+    @ApiModelProperty(example = "Mrkvicka")
+    private String lastName;
 
     @JsonProperty("userType")
-    private UserType userType = null;
+    private UserType userType;
 }

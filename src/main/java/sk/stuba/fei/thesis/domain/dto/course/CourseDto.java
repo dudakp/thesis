@@ -7,8 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import sk.stuba.fei.thesis.domain.dto.actor.UserDto;
+import sk.stuba.fei.thesis.domain.model.course.EducationalActivity;
 import sk.stuba.fei.thesis.domain.model.course.Exam;
-import sk.stuba.fei.thesis.domain.model.course.Lecture;
 import sk.stuba.fei.thesis.domain.model.course.Semester;
 
 import javax.validation.Valid;
@@ -50,11 +50,11 @@ public class CourseDto {
 
     @JsonProperty("lectures")
     @Valid
-    private List<Lecture> lectures = new ArrayList<>();
+    private List<EducationalActivity> educationalActivities = new ArrayList<>();
 
     @JsonProperty("labs")
     @Valid
-    private List<Lecture> labs = new ArrayList<>();
+    private List<EducationalActivity> labs = new ArrayList<>();
 
     @JsonProperty("exams")
     @Valid

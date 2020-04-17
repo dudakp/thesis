@@ -48,12 +48,15 @@ public class SecurityConfiguration extends KeycloakWebSecurityConfigurerAdapter 
                 .cors().and()
                 .csrf().disable()
                 .authorizeRequests()
-                .anyRequest().permitAll();
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
-//                .authorizeRequests()
-//                .anyRequest().fullyAuthenticated()
-//                .and().httpBasic();
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) //
+                .and() //
+                .authorizeRequests()
+                .antMatchers("/v2/api-docs", "/configuration/ui",
+                        "/swagger-resources/**", "/configuration/**",
+                        "/swagger-ui.html", "/webjars/**")
+                .permitAll()
+                .anyRequest().fullyAuthenticated();
     }
 
     @Override
