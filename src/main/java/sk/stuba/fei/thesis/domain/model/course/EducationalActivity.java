@@ -30,7 +30,7 @@ public class EducationalActivity {
     private String _id;
 
     @JsonProperty("room")
-    private Room room;
+    private String room;
 
     @NotNull
     @JsonProperty("dayOfWeek")
@@ -49,12 +49,10 @@ public class EducationalActivity {
 
     @NotNull
     @JsonProperty("from")
-    @JsonFormat(pattern = "HH:mm")
     private LocalTime from;
 
     @NotBlank
     @JsonProperty("to")
-    @JsonFormat(pattern = "HH:mm")
     private LocalTime to;
 }
 

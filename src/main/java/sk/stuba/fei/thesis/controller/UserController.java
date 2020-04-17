@@ -34,6 +34,11 @@ public class UserController {
         return this.userService.getByPartialNameMatch(queryName);
     }
 
+    @GetMapping(value = "getByType")
+    public Flux<User> getByType(@RequestParam String type) {
+        return this.userService.getAll();
+    }
+
     @PostMapping(value = "enroll")
     public Mono<User> enrollToCourse(@RequestParam String courseAbrv) {
         return this.userService.enrollToCourse(courseAbrv);
