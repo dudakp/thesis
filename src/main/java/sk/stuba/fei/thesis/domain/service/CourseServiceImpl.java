@@ -17,6 +17,8 @@ import sk.stuba.fei.thesis.domain.dto.actor.UserDto;
 import sk.stuba.fei.thesis.domain.model.course.Course;
 import sk.stuba.fei.thesis.predicates.CoursePredicates;
 
+import java.util.Optional;
+
 import java.util.stream.Collectors;
 
 
@@ -38,7 +40,10 @@ public class CourseServiceImpl implements CourseService {
                 .title(course.getTitle())
                 .abbreviation(course.getAbbreviation())
                 .description(course.getDescription())
-                .semester(course.getSemester());
+                .semester(course.getSemester())
+                .exams(course.getExams())
+                .finalExam(course.getFinalExam())
+                .isCourseLink(course.getIsCourseLink());
 
         return this.courseRepository.findOne(CoursePredicates.hasAbrv(course.getAbbreviation()))
                 .flatMap(__ -> Mono.error(new Exception(String.format("Course '%s' already exists!", __.getTitle()))))
@@ -56,6 +61,11 @@ public class CourseServiceImpl implements CourseService {
                                     lectureBuildObject.lectures(course.getLectures());
                                     return this.lectureRepository.save(course.getLectures().get(0));
                                 })
+                                .flatMap(__ -> Mono.justOrEmpty(course.getLabs())
+                                        .map(educationalActivities -> {
+                                            lectureBuildObject.labs(course.getLabs());
+                                            return this.lectureRepository.saveAll(course.getLabs());
+                                        }))
                                 .flatMap(__ ->
                                         this.courseRepository.save(lectureBuildObject.build())
                                 )
