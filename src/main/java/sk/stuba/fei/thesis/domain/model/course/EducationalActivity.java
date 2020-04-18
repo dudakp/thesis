@@ -7,6 +7,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.FieldType;
 import sk.stuba.fei.thesis.domain.model.course.enums.ActivityType;
 import sk.stuba.fei.thesis.domain.model.course.enums.DayOfWeek;
 

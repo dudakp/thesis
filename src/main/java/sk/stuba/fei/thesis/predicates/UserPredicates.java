@@ -2,6 +2,7 @@ package sk.stuba.fei.thesis.predicates;
 
 import com.querydsl.core.types.Predicate;
 import sk.stuba.fei.thesis.domain.model.actors.QUser;
+import sk.stuba.fei.thesis.domain.model.actors.UserType;
 
 public final class UserPredicates {
 
@@ -28,6 +29,10 @@ public final class UserPredicates {
                         user.lastName.likeIgnoreCase(queryIdentityAttribute))
                 .or(
                         user.isID.goe(Long.parseLong(queryIdentityAttribute)));
+    }
+
+    public static Predicate hasUserType(UserType type) {
+        return QUser.user.userType.eq(type);
     }
 
 }
