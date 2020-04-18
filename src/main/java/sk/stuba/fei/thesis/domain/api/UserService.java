@@ -9,7 +9,7 @@ public interface UserService {
 
     Mono<User> enrollToCourse(String courveAbrv);
 
-    Flux<User> getByPartialNameMatch(String queryName);
+    Mono<User> changeUserType(Long userIsID, UserType userType);
 
     Flux<User> getAll();
 }

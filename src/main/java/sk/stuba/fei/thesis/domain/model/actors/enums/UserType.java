@@ -4,9 +4,10 @@ import lombok.RequiredArgsConstructor;
 
 public enum UserType {
 
-    MONDAY("MONDAY"),
-    TUESDAY("TUESDAY");
-    
+    ADMIN("ADMIN"),
+    STUDENT("STUDENT"),
+    TEACHER("TEACHER");
+
     private String value;
 
     UserType(String value) {

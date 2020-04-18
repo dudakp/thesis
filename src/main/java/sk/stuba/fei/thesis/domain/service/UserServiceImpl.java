@@ -9,6 +9,7 @@ import sk.stuba.fei.thesis.dao.api.UserSearchService;
 import sk.stuba.fei.thesis.domain.api.UserService;
 import sk.stuba.fei.thesis.domain.dao.UserRepository;
 import sk.stuba.fei.thesis.domain.model.actors.User;
+import sk.stuba.fei.thesis.domain.model.actors.UserType;
 import sk.stuba.fei.thesis.utils.api.AuthFacade;
 
 @Service
@@ -41,14 +42,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Flux<User> getByPartialNameMatch(String queryName) {
-        return this.userSearchService.findByIdentityAttribute(queryName);
+    public Mono<User> changeUserType(Long userIsID, UserType userType) {
+        return this.userSearchService.findByIsID(userIsID)
+                .switchIfEmpty(Mono.error(new Exception("User does not exist in DB!")))
+                .map(user -> {
+                    user.setUserType(userType);
+                    return user;
+                })
+                .flatMap(this.userRepository::save);
     }
 
     @Override
     public Flux<User> getAll() {
         return this.userRepository.findAll();
     }
-
 
 }

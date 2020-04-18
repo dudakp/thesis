@@ -1,13 +1,14 @@
 package sk.stuba.fei.thesis.persistence;
 
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.data.convert.ReadingConverter;
+import sk.stuba.fei.thesis.domain.model.course.EducationalActivity;
 
-import java.time.LocalTime;
-
-public class LocalTimeReadingConverter implements Converter<String, LocalTime> {
+@ReadingConverter
+public class LocalTimeReadingConverter implements Converter<EducationalActivity, EducationalActivity> {
 
     @Override
-    public LocalTime convert(String s) {
-        return LocalTime.parse(s);
+    public EducationalActivity convert(EducationalActivity s) {
+        return new EducationalActivity(s.get_id(), s.getRoom(), s.getDayOfWeek(), s.getActivityType(), s.getForCourse(), s.getFrom(), s.getTo());
     }
 }
